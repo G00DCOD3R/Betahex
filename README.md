@@ -1,2 +1,3 @@
 # Betahex
 ai playing games
+:)
