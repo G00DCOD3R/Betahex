@@ -347,8 +347,8 @@ int main()
 
 
 // some basic strats: 
-	//  72 93 135 1.38
-	//  81 91 280 3.19
-	//  66 94 77 2.34
-	//  98 90 308 0.46
+	//  72 93 135 1.38 pretty bad
+	//  81 91 280 3.19 this is pretty decent (base of a default one)
+	//  66 94 77 2.34  really bad
+	//  98 90 308 0.46 has potential to be good, but to high keep_close factor and low exploration factor
 	
