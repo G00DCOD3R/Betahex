@@ -4,5 +4,5 @@ ai playing games
 
 compile with: 
 ```
-g++ a.cpp games.cpp -o a
+g++ a.cpp game.cpp -o a
 ```
