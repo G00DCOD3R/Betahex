@@ -25,40 +25,46 @@ bool game::good(int x, int y)
 void game::__init__()
 {
 	for(int i=0;i<=N;i++) for(int j=0;j<=N;j++) br[i][j] = vis[i][j] = 0;
-	puts("Which color do you choose?");
-	puts("0 - Red (First)");
-	puts("1 - Blue (Second)");
-	cin >> op_id;
+	
+	//  option to play with ai
+	//  puts("Which color do you choose?");
+	//  puts("0 - Red (First)");
+	//  puts("1 - Blue (Second)");
+	//  cin >> op_id;
+	
+	//  option to play ai alone (comment if uncommented above)
+	op_id = 1;
+	
 	my_id = op_id ^ 1;
 }
 void game::show()
 {
-	printf("      \033[94m");
-	for(int i=1;i<=N;i++) printf("(%d) ", i);
-	printf("\033[0m");
-	puts("");
-	printf("     ");
-	for(int j=0;j<N;j++) printf(" / \\");
-	puts("");
+	fprintf(stderr, "      \033[94m");
+	for(int i=1;i<=N;i++) fprintf(stderr, "(%d) ", i);
+	fprintf(stderr, "\033[0m");
+	fprintf(stderr, "\n");
+	fprintf(stderr, "     ");
+	for(int j=0;j<N;j++) fprintf(stderr, " / \\");
+	fprintf(stderr, "\n");
 	for(int i=1;i<=N;i++)
 	{
-		for(int j=0;j<i*2;j++) printf(" ");
-		printf("\033[91m(%c)\033[0m|", (char)(i+'A'-1));
+		for(int j=0;j<i*2;j++) fprintf(stderr, " ");
+		fprintf(stderr, "\033[91m(%c)\033[0m|", (char)(i+'A'-1));
 		for(int j=1;j<=N;j++)
 		{
-			if(br[i][j] == 1) printf(" \033[91mR\033[0m |");
-			else if(br[i][j] == 2) printf(" \033[94mB\033[0m |");
-			else printf(" . |");
+			if(br[i][j] == 1) fprintf(stderr, " \033[91mR\033[0m |");
+			else if(br[i][j] == 2) fprintf(stderr, " \033[94mB\033[0m |");
+			else fprintf(stderr, " . |");
 			
 		}
-		puts("");
-		printf("   ");
-		for(int j=0;j<i*2;j++) printf(" ");
-		for(int j=0;j<N;j++) printf(" \\ /");
-		if(i != N) printf(" \\");
-		puts("");
+		fprintf(stderr, "\n");
+		fprintf(stderr, "   ");
+		for(int j=0;j<i*2;j++) fprintf(stderr, " ");
+		for(int j=0;j<N;j++) fprintf(stderr, " \\ /");
+		if(i != N) fprintf(stderr, " \\");
+		fprintf(stderr, "\n");
 	}
-	puts("");
+	fprintf(stderr, "\n");
 }
 
 int game::make(int x, int y, bool who)
@@ -118,7 +124,7 @@ void game::undo_move()
 }
 void game::let_make_move()
 {
-	printf("Your move\n");
+	fprintf(stderr, "Your move\n");
 	int m = 0;
 	while(m == 0) 
 	{
@@ -126,7 +132,7 @@ void game::let_make_move()
 		cin >> s;
 		if(s.size() != 2 && s.size() != 3)
 		{
-			puts("Invalid move\nvalid move e.g. A1");
+			fprintf(stderr, "Invalid move\nvalid move e.g. A1");
 			continue;
 		}
 		int x = s[0] - 'A'+1, y = s[1] - '0';
@@ -136,7 +142,7 @@ void game::let_make_move()
 		}
 		m = make(x,y,turn);
 		if(m > 1) declare_winner(turn);
-		if(m == 0) puts("Invalid move");
+		if(m == 0) fprintf(stderr, "Invalid move");
 	}
 }
 
@@ -144,7 +150,7 @@ void game::declare_winner(bool who)
 {
 	char winner = 'R';
 	if(who) winner = 'B';
-	cout << "Player " << winner << " has won the game!\n";
+	cerr << "Player " << winner << " has won the game!\n";
 	show();
 	exit(0);
 }

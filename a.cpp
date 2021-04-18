@@ -48,7 +48,7 @@ class player
 			clock_t TM = clock();
 			if((ld)(TM - ST) / CLOCKS_PER_SEC > tm_for_move)
 			{
-				cout << "snowcap size is " << i+1 << "\n";
+				cerr << "snowcap size is " << i+1 << "\n";
 				break;
 			}
 			//  cerr << (ld)(TM - ST) / CLOCKS_PER_SEC << "\n";
@@ -66,7 +66,7 @@ class player
 				best = cur;
 			}
 		}
-		cout << "Current estimated win percentage: " << best * 100 << "%\n";
+		cerr << "Current estimated win percentage: " << best * 100 << "%\n";
 		return w;
 		
 	}
@@ -174,11 +174,12 @@ class player
 		get_path(best.se, path);
 	}
 };
+player me, they;
 
 int main()
 {
 	bool turn = 0;
-	player me;
+	
 	G.__init__();
 	G.show();
 	while(true)
@@ -190,7 +191,7 @@ int main()
 			clock_t ST = clock();
 			PII where = me.search_move(3.0);
 			clock_t ED = clock();
-			cout << "move took " << setprecision(5) << fixed << (ld)(ED - ST) / CLOCKS_PER_SEC << " seconds\n";
+			cerr << "move took " << setprecision(5) << fixed << (ld)(ED - ST) / CLOCKS_PER_SEC << " seconds\n";
 			string row;
 			if(where.se < 10) row = (char)(where.se + '0');
 			else 
@@ -205,11 +206,40 @@ int main()
 			if(tmp > 1) G.declare_winner(turn);
 			if(tmp == 0)
 			{
-				puts("resign");
+				cerr << "resign\n";
 				G.declare_winner(turn ^ 1);
 			}
 		}
-		else G.let_make_move();
+		
+		//  option to play ai alone
+		else
+		{
+			int tmp=0;
+			clock_t ST = clock();
+			PII where = they.search_move(3.0);
+			clock_t ED = clock();
+			cerr << "move took " << setprecision(5) << fixed << (ld)(ED - ST) / CLOCKS_PER_SEC << " seconds\n";
+			string row;
+			if(where.se < 10) row = (char)(where.se + '0');
+			else 
+			{
+				int dig = where.se / 10;
+				row = (char)(dig + '0');
+				dig = where.se % 10;
+				row = row + (char)(dig + '0');
+			}
+			cout << (char)(where.fi+'A'-1) << row << " \n";
+			tmp = G.make(where.fi, where.se, turn);
+			if(tmp > 1) G.declare_winner(turn);
+			if(tmp == 0)
+			{
+				cerr << "resign\n";
+				G.declare_winner(turn ^ 1);
+			}
+		}
+		
+		//  else G.let_make_move(); // option to play with human 
+		
 		G.show();
 	}
 }
