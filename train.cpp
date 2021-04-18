@@ -28,6 +28,44 @@ constexpr ll nax = 1e6+6969, INF = 2e9+6969;
 
 game G;
 
+struct strat
+{
+	int a,b,c; // 80 93 200
+	ld d; // 2.0
+	void show()
+	{
+		cout << a << " " << b << " " << c << " " << d << "\n";
+	}
+	void def()
+	{
+		a = 81; b = 91; c = 310;
+		d = 3.14;
+	}
+	void insert(int A, int B, int C, ld D)
+	{
+		a = A; b = B; c = C; d = D;
+	}
+};
+strat gen_similar(strat cur)
+{
+	strat w;
+	w.a = cur.a + random(max(-cur.a + 1, -20), min(100 - cur.a, 20));
+	w.b = cur.b + random(max(-cur.b + 1, -20), min(100 - cur.b, 20));
+	w.c = cur.c + random(max(-cur.c + 1, -100), 100);
+	ld tmp = cur.d * 100;
+	w.d = cur.d + ((ld)random(max(-(int)tmp, -100), 100) / 100);
+	return w;
+}
+strat new_random()
+{
+	strat w;
+	w.a = random(30, 99);
+	w.b = random(90, 99);
+	w.c = random(80, 1000);
+	w.d = (ld)random(1, 900) / 100;
+	return w;
+}
+
 class player
 {
 	private:
@@ -43,13 +81,13 @@ class player
 	
 	public:
 	
-	void __init__()
+	void __init__(strat cur)
 	{
 		// default 
-		keep_close_policy = 81;
-		UCT_LOG_MULT = 3.14;
-		MOVE_IGNORE = 91;
-		ROLL_OUT_NR = 310;
+		keep_close_policy = cur.a;
+		UCT_LOG_MULT = cur.d;
+		MOVE_IGNORE = cur.b;
+		ROLL_OUT_NR = cur.c;
 		
 		//  cin >> keep_close_policy >> UCT_LOG_MULT >> MOVE_IGNORE >> ROLL_OUT_NR;
 	}
@@ -194,19 +232,19 @@ class player
 	}
 };
 player me, they;
-ld TIME_PER_MOVE = 3.0; // time that ai will take to choose a move
+ld TIME_PER_MOVE = 15.0; // time that ai will take to choose a move
 
-int main()
+bool one_game(strat one, strat two)
 {
 	bool turn = 0;
 	
 	G.__init__();
 	
-	me.__init__();
-	they.__init__(); // only if ai alone mode enabled
-	// then me plays red and they plays blue
+	me.__init__(one);
+	they.__init__(two);
+	// me plays red and they plays blue
 	
-	G.show();
+	//  G.show();
 	while(true)
 	{
 		turn = G.turn;
@@ -228,9 +266,14 @@ int main()
 			}
 			cout << (char)(where.fi+'A'-1) << row << " \n";
 			tmp = G.make(where.fi, where.se, turn);
-			if(tmp > 1) G.declare_winner(turn);
+			if(tmp > 1)
+			{
+				return turn;
+				G.declare_winner(turn);
+			}
 			if(tmp == 0)
 			{
+				return turn ^ 1;
 				cerr << "resign\n";
 				G.declare_winner(turn ^ 1);
 			}
@@ -255,9 +298,14 @@ int main()
 			}
 			cout << (char)(where.fi+'A'-1) << row << " \n";
 			tmp = G.make(where.fi, where.se, turn);
-			if(tmp > 1) G.declare_winner(turn);
+			if(tmp > 1)
+			{
+				return turn;
+				G.declare_winner(turn);
+			}
 			if(tmp == 0)
 			{
+				return turn ^ 1;
 				cerr << "resign\n";
 				G.declare_winner(turn ^ 1);
 			}
@@ -267,4 +315,40 @@ int main()
 		
 		G.show();
 	}
+	//  G.show();
 }
+
+strat mn,other;
+
+int main()
+{
+	//  mn.def();
+	//  for(int rep = 0;; rep++)
+	//  {
+		//  if(rep % 5 != 0) other = gen_similar(mn);
+		//  else other = new_random();
+		//  mn.show();
+		//  other.show();
+		//  bool who = one_game(mn, other);
+		//  if(who) mn = other;
+		//  mn.show();
+		
+	//  }
+	//  cout << "current winner: \n";
+	//  mn.show();
+	mn.insert(98, 90, 308, 0.46);
+	other.insert(81, 91, 280, 3.19);
+	mn.show();
+	other.show();
+	
+	one_game(mn, other);
+	
+}
+
+
+// some basic strats: 
+	//  72 93 135 1.38 pretty bad
+	//  81 91 280 3.19 this is pretty decent (base of a default one)
+	//  66 94 77 2.34  really bad
+	//  98 90 308 0.46 has potential to be good, but to high keep_close factor and low exploration factor
+	
