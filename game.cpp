@@ -25,6 +25,10 @@ bool game::good(int x, int y)
 void game::__init__()
 {
 	for(int i=0;i<=N;i++) for(int j=0;j<=N;j++) br[i][j] = vis[i][j] = 0;
+	while(mvs.size() > 0) mvs.pop();
+	moves_made = 0;
+	nrv = 1;
+	turn = 0;
 	
 	//  option to play with ai
 	//  puts("Which color do you choose?");
