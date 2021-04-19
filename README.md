@@ -14,7 +14,7 @@ in a.cpp comment/uncomment elses in main()
 
 train.cpp is for training ai, to compile
 ```
-g++ -O3 train.cpp game.cpp player -o t
+g++ -O3 train.cpp game.cpp player.cpp -o t
 ```
 basically game.cpp and player.cpp are libraries for managing game and choosing best move (compile as extra library)
 
