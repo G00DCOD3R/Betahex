@@ -4,7 +4,7 @@ ai playing hex
 
 compile with: 
 ```
-g++ a.cpp game.cpp -o a
+g++ -O3 a.cpp game.cpp -o a
 ```
 to play with ai you should: 
 in game.cpp comment some lines in ```__init__()```
@@ -14,7 +14,7 @@ in a.cpp comment/uncomment elses in main()
 
 train.cpp is for training ai, to compile
 ```
-g++ train.cpp game.cpp -o train
+g++ -O3 train.cpp game.cpp -o train
 ```
 basically game.cpp is library for managing game (compile as extra library)
 
