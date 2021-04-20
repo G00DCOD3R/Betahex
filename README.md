@@ -10,9 +10,9 @@ g++ -O3 a.cpp game.cpp player.cpp -o a
 
 To change that you should: 
 1. comment lines in ```__init__()``` function in game.cpp
-2. comment lines in a.cpp in ``main()```
+2. comment lines in a.cpp in ```main()```
 
-I plan to add more convience way of changing modes 
+I plan to add an easier way of changing modes 
 
 **For testing / training purposes use train.cpp**
 
