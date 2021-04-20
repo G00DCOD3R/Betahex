@@ -2,6 +2,10 @@
 ai playing hex
 :)
 
+Now it plays really bad, it's mainly because of time_per_move = 5.0
+this variable determines how long one move will take
+Preferably change it to at least 20.0 (it is in seconds), otherwise it makes just "good" random moves
+
 compile with: 
 ```
 g++ -O3 a.cpp game.cpp player.cpp -o a
