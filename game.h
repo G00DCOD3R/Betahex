@@ -31,3 +31,31 @@ class game
 		void undo_move();
 		void let_make_move();
 };
+
+//  extern game G;
+
+//  class player
+//  {
+	//  private: 
+		//  vector <vector <pair<PII, int>>> v;
+		//  unordered_map <int,int> term_nodes;
+		//  int n, r[2][1000069];
+		//  int moves_ahead;
+		//  int random(int a, int b);
+		
+	//  public: 
+		//  // decision_making
+		//  int keep_close_policy;
+		//  ld UCT_LOG_MULT;
+		//  int MOVE_IGNORE;
+		//  int ROLL_OUT_NR;
+		
+		//  // functions
+		//  void __init__();
+		//  PII getr_child(int & m);
+		//  PII search_move(ld tm_for_move);
+		//  int rollout();
+		//  void get_path(int node, vi & path);
+		//  void run(int nroll);
+		//  pair<PII, int> uct_sel(int node);
+//  };

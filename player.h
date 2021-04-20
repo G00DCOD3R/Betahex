@@ -6,6 +6,10 @@
 #define boost {ios_base::sync_with_stdio(false); cin.tie(); cout.tie();}
 
 #include <bits/stdc++.h>
+#ifndef gameh
+#define gameh 1
+#include "game.h"
+#endif
 using namespace std;
 
 typedef long long ll;
@@ -15,6 +19,8 @@ typedef vector <int> vi;
 typedef pair<int,int> PII;
 typedef pair<ll,ll> PLL;
 
+extern game G;
+
 class player
 {
 	private: 
@@ -23,7 +29,6 @@ class player
 		int n, r[2][1000069];
 		int moves_ahead;
 		int random(int a, int b);
-		game G;
 		
 	public: 
 		// decision_making

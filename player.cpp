@@ -6,7 +6,10 @@
 #define boost {ios_base::sync_with_stdio(false); cin.tie(); cout.tie();}
 
 #include <bits/stdc++.h>
+#ifndef gameh
+#define gameh 1
 #include "game.h"
+#endif
 #include "player.h"
 using namespace std;
 mt19937 rng1(chrono::steady_clock::now().time_since_epoch().count());
@@ -18,6 +21,8 @@ typedef long double ld;
 typedef vector <int> vi;
 typedef pair<int,int> PII;
 typedef pair<ll,ll> PLL;
+
+game G;
 
 int player::random(int a, int b)
 {

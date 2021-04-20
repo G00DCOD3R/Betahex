@@ -6,17 +6,20 @@
 #define boost {ios_base::sync_with_stdio(false); cin.tie(); cout.tie();}
 
 #include <bits/stdc++.h>
+#ifndef gameh
+#define gameh 1
 #include "game.h"
+#endif
 #include "player.h"
 using namespace std;
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+mt19937 rng2(chrono::steady_clock::now().time_since_epoch().count());
 #define random_shuffle(...) shuffle(__VA_ARGS__, rng)
 
 int random(int a, int b)
 {
 	assert(a <= b);
 	// //  return a + rand()%(b-a+1);
-	return uniform_int_distribution<int>(a,b)(rng);
+	return uniform_int_distribution<int>(a,b)(rng2);
 }
 
 typedef long long ll;
@@ -27,7 +30,7 @@ typedef pair<int,int> PII;
 typedef pair<ll,ll> PLL;
 constexpr ll nax = 1e6+6969, INF = 2e9+6969;
 
-game G;
+//  game G;
 
 struct strat
 {
@@ -75,7 +78,7 @@ void __init__(strat cur, player & who)
 }
 
 player me, they;
-ld TIME_PER_MOVE = 15.0; // time that ai will take to choose a move
+ld TIME_PER_MOVE = 5.0; // time that ai will take to choose a move
 
 bool one_game(strat one, strat two)
 {
@@ -165,26 +168,29 @@ strat mn,other;
 
 int main()
 {
-	//  mn.def();
-	//  for(int rep = 0;; rep++)
-	//  {
-		//  if(rep % 5 != 0) other = gen_similar(mn);
-		//  else other = new_random();
-		//  mn.show();
-		//  other.show();
-		//  bool who = one_game(mn, other);
-		//  if(who) mn = other;
-		//  mn.show();
+	mn.def();
+	for(int rep = 0;; rep++)
+	{
+		if(rep % 5 != 0) other = gen_similar(mn);
+		else other = new_random();
+		mn.show();
+		other.show();
+		bool who = one_game(mn, other);
+		if(who) mn = other;
+		mn.show();
 		
-	//  }
-	//  cout << "current winner: \n";
-	//  mn.show();
-	mn.insert(98, 90, 308, 0.46);
-	other.insert(81, 91, 280, 3.19);
+	}
+	cout << "current winner: \n";
 	mn.show();
-	other.show();
 	
-	one_game(mn, other);
+	
+	//  FOR TESTING STRATS
+	//  mn.insert(98, 90, 308, 0.46);
+	//  other.insert(81, 91, 280, 3.19);
+	//  mn.show();
+	//  other.show();
+	
+	//  one_game(mn, other);
 	
 }
 
