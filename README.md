@@ -6,17 +6,22 @@ compile with:
 ```
 g++ -O3 a.cpp game.cpp player.cpp -o a
 ```
-to play with ai you should: 
-in game.cpp comment some lines in ```__init__()```
-there is a brief description what to do
+**Currently Betahex plays with itself**
 
-in a.cpp comment/uncomment elses in main()
+To change that you should: 
+1. comment lines in ```__init__()``` function in game.cpp
+2. comment lines in a.cpp in ``main()```
 
-train.cpp is for training ai, to compile
+I plan to add more convience way of changing modes 
+
+**For testing / training purposes use train.cpp**
+
+
+compilation:
 ```
 g++ -O3 train.cpp game.cpp player.cpp -o t
 ```
 basically game.cpp and player.cpp are libraries for managing game and choosing best move (compile as extra library)
 
-decent strat (which is set as a default): 
+decent strat (which is set as a default in a.cpp): 
 ```(91 91 310 3.14)```
