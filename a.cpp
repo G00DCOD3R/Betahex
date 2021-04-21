@@ -31,18 +31,20 @@ typedef pair<ll,ll> PLL;
 constexpr ll nax = 1e6+6969, INF = 2e9+6969;
 
 player me, they;
-ld TIME_PER_MOVE = 5.0; // time that ai will take to choose a move
+ld TIME_PER_MOVE = 20.0; // time that ai will take to choose a move (in seconds)
+bool chosen_mode = 1; // 0 -> human vs ai, 1 -> ai with itself
+
 
 int main()
 {
 	bool turn = 0;
 	
-	G.__init__();
+	G.__init__(chosen_mode);
 	//  they.G.__init__();
 	
 	me.__init__();
-	they.__init__(); // only if ai alone mode enabled
-	// then me plays red and they plays blue
+	they.__init__();
+	// me plays red and they plays blue (if ai vs ai)
 	
 	G.show();
 	while(true)
@@ -75,7 +77,7 @@ int main()
 		}
 		
 		//  // option to play ai alone
-		else
+		else if(chosen_mode)
 		{
 			int tmp=0;
 			clock_t ST = clock();
@@ -101,7 +103,7 @@ int main()
 			}
 		}
 		
-		//  else G.let_make_move(); // option to play with human 
+		else G.let_make_move(); // option to play with human 
 		
 		G.show();
 	}

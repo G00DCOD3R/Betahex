@@ -78,13 +78,20 @@ void __init__(strat cur, player & who)
 }
 
 player me, they;
-ld TIME_PER_MOVE = 5.0; // time that ai will take to choose a move
+ld TIME_PER_MOVE = 20.0; // time that ai will take to choose a move
+bool chosen_mode = 1; // 0 -> human vs ai, 1 -> ai with itself
+
+	//  *** WARNING ***
+	//  in train.cpp, ai plays with itself, so there 
+	//  is no need for changing chosen_mode to 0, 
+	//  currently there is no way of training ai with human
+	//  so don't change chosen_mode!!!
 
 bool one_game(strat one, strat two)
 {
 	bool turn = 0;
 	
-	G.__init__();
+	G.__init__(chosen_mode);
 	
 	__init__(one, me);
 	__init__(two, they);
