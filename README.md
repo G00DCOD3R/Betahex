@@ -29,3 +29,10 @@ basically game.cpp and player.cpp are libraries for managing game and choosing b
 
 decent strat (which is set as a default in a.cpp): 
 ```(91 91 310 3.14)```
+
+
+
+**Todo**
+- provide more game analysis (such as other good moves, and their win%)
+- board hash
+- board evaluation (as an extra parameter to the position value)
