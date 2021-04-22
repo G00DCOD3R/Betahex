@@ -31,7 +31,7 @@ typedef pair<ll,ll> PLL;
 constexpr ll nax = 1e6+6969, INF = 2e9+6969;
 
 player me, they;
-ld TIME_PER_MOVE = 20.0; // time that ai will take to choose a move (in seconds)
+ld TIME_PER_MOVE = 30.0; // time that ai will take to choose a move (in seconds)
 bool chosen_mode = 1; // 0 -> human vs ai, 1 -> ai with itself
 
 
@@ -57,16 +57,8 @@ int main()
 			PII where = me.search_move(TIME_PER_MOVE);
 			clock_t ED = clock();
 			cerr << "move took " << setprecision(5) << fixed << (ld)(ED - ST) / CLOCKS_PER_SEC << " seconds\n";
-			string row;
-			if(where.se < 10) row = (char)(where.se + '0');
-			else 
-			{
-				int dig = where.se / 10;
-				row = (char)(dig + '0');
-				dig = where.se % 10;
-				row = row + (char)(dig + '0');
-			}
-			cout << (char)(where.fi+'A'-1) << row << " \n";
+			string Move = G.conv_move(where);
+			cout << Move << "\n";
 			tmp = G.make(where.fi, where.se, turn);
 			if(tmp > 1) G.declare_winner(turn);
 			if(tmp == 0)
@@ -84,16 +76,8 @@ int main()
 			PII where = they.search_move(TIME_PER_MOVE);
 			clock_t ED = clock();
 			cerr << "move took " << setprecision(5) << fixed << (ld)(ED - ST) / CLOCKS_PER_SEC << " seconds\n";
-			string row;
-			if(where.se < 10) row = (char)(where.se + '0');
-			else 
-			{
-				int dig = where.se / 10;
-				row = (char)(dig + '0');
-				dig = where.se % 10;
-				row = row + (char)(dig + '0');
-			}
-			cout << (char)(where.fi+'A'-1) << row << " \n";
+			string Move = G.conv_move(where);
+			cout << Move << "\n";
 			tmp = G.make(where.fi, where.se, turn);
 			if(tmp > 1) G.declare_winner(turn);
 			if(tmp == 0)

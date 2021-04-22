@@ -158,10 +158,24 @@ void game::let_make_move()
 
 void game::declare_winner(bool who)
 {
-	// swapping players here is intentional!
-	char winner = 'B';
-	if(who) winner = 'R';
+	char winner = 'R';
+	if(who) winner = 'B';
 	cerr << "Player " << winner << " has won the game!\n";
 	show();
 	exit(0);
+}
+
+string game::conv_move(PII where)
+{
+	string row;
+	if(where.se < 10) row = (char)(where.se + '0');
+	else 
+	{
+		int dig = where.se / 10;
+		row = (char)(dig + '0');
+		dig = where.se % 10;
+		row = row + (char)(dig + '0');
+	}
+	row = (char)(where.fi + 'A'-1) + row;
+	return row;
 }

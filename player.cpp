@@ -34,10 +34,10 @@ int player::random(int a, int b)
 void player::__init__()
 {
 	// default 
-	keep_close_policy = 91;
-	UCT_LOG_MULT = 3.14;
-	MOVE_IGNORE = 91;
-	ROLL_OUT_NR = 310;
+	keep_close_policy = 100;
+	UCT_LOG_MULT = 1.14;
+	MOVE_IGNORE = 100;
+	ROLL_OUT_NR = 400;
 	
 	//  cin >> keep_close_policy >> MOVE_IGNORE >> ROLL_OUT_NR >> UCT_LOG_MULT;
 }
@@ -47,6 +47,7 @@ PII player::search_move(ld tm_for_move)
 	v.clear();
 	n = 0;
 	moves_ahead = 0;
+	inv_moves[0].clear();
 	term_nodes.clear();
 	v.pb(vector<pair<PII,int>>(0));
 	r[0][0] = r[1][0] = 0;
@@ -66,16 +67,33 @@ PII player::search_move(ld tm_for_move)
 	//  show();
 	ld best = -1e9 - 69;
 	PII w = mp(-1, -1);
+	vector <pair<ld, PII>> possibilities;
 	for(auto e: v[0])
 	{
 		ld cur = (ld)r[0][e.se] / r[1][e.se];
+		possibilities.pb(mp(cur, e.fi));
 		if(cur > best)
 		{
 			w = e.fi;
 			best = cur;
 		}
 	}
-	cerr << "Current estimated win percentage: " << best * 100 << "%\n";
+	sort(all(possibilities));
+	reverse(all(possibilities));
+	cerr << "Current estimated win percentage: " << setprecision(2) << fixed << best * 100 << "%\n";
+	cerr << "Other good moves: ";
+	for(int i=1;i<min((int)possibilities.size(), 11);i++)
+	{
+		PII Move = possibilities[i].se;
+		cerr << G.conv_move(Move)<< "=[" << setprecision(2) << fixed << possibilities[i].fi * 100 << "%]; ";
+	}
+	cerr << "\nWorst moves: ";
+	for(int i=possibilities.size()-1;i > max(0, (int)possibilities.size() - 5);i--)
+	{
+		PII Move = possibilities[i].se;
+		cerr << G.conv_move(Move)<< "=[" << setprecision(2) << fixed << possibilities[i].fi * 100 << "%]; ";
+	}
+	cerr << "\n";
 	return w;
 	
 }
@@ -174,7 +192,14 @@ void player::get_path(int node, vi & path)
 	{
 		int tmp;
 		PII child = getr_child(tmp);
+		while(inv_moves[node].find(child) != inv_moves[node].end())
+		{
+			G.undo_move();
+			child = getr_child(tmp);
+		}
 		n++;
+		inv_moves[n].clear();
+		inv_moves[node].insert(child);
 		r[0][n] = r[1][n] = 0;
 		v[node].pb(mp(child, n));
 		v.pb(vector<pair<PII,int>>(0));

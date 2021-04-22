@@ -30,4 +30,5 @@ class game
 		int make(int x, int y, bool who);
 		void undo_move();
 		void let_make_move();
+		string conv_move(PII where);
 };
