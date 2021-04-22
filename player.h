@@ -27,6 +27,7 @@ class player
 		vector <vector <pair<PII, int>>> v;
 		unordered_map <int,int> term_nodes;
 		int n, r[2][1000069];
+		set <PII> inv_moves[10000069];
 		int moves_ahead;
 		int random(int a, int b);
 		
