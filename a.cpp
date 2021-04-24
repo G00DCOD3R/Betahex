@@ -32,8 +32,9 @@ constexpr ll nax = 1e6+6969, INF = 2e9+6969;
 
 player me, they;
 ld TIME_PER_MOVE = 30.0; // time that ai will take to choose a move (in seconds)
-bool chosen_mode = 1; // 0 -> human vs ai, 1 -> ai with itself
+bool chosen_mode = 0; // 0 -> human vs ai, 1 -> ai with itself
 
+void TESTING(); // Do with it whatever you want ;) 
 
 int main()
 {
@@ -47,8 +48,15 @@ int main()
 	// me plays red and they plays blue (if ai vs ai)
 	
 	G.show();
+	
+	//  TESTING(); // uncomment if necessary
+	
 	while(true)
 	{
+		ld tmp1 = G.eval(0), tmp2 = G.eval(1);
+		cerr << "board score (for red) is: " << setprecision(2) << fixed << tmp2 / (tmp1 + tmp2) << "\n";
+		// same reason as in player::get_path(), red want to maximize tmp2 and vice verse
+		
 		turn = G.turn;
 		if(G.turn == G.my_id)
 		{
@@ -90,5 +98,18 @@ int main()
 		else G.let_make_move(); // option to play with human 
 		
 		G.show();
+	}
+}
+
+
+void TESTING()
+{
+	bool turn = 0;
+	while(true) 
+	{
+		turn = G.turn;
+		G.let_make_move();
+		G.show();
+		cout << G.eval(turn) << "\n";
 	}
 }

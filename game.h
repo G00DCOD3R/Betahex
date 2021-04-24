@@ -24,6 +24,7 @@ class game
 		stack <PII> mvs;
 		bool my_id, op_id, turn=0;
 		bool good(int x, int y);
+		inline bool inboard(int x, int y);
 		void __init__(bool Mode);
 		void show();
 		void declare_winner(bool who);
@@ -31,4 +32,5 @@ class game
 		void undo_move();
 		void let_make_move();
 		string conv_move(PII where);
+		int eval(bool who);
 };

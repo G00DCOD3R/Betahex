@@ -34,20 +34,21 @@ constexpr ll nax = 1e6+6969, INF = 2e9+6969;
 
 struct strat
 {
-	int a,b,c; // 80 93 200
-	ld d; // 2.0
+	int a,b,c;
+	ld d,e;
 	void show()
 	{
-		cout << a << " " << b << " " << c << " " << d << "\n";
+		cout << a << " " << b << " " << c << " " << d << " " << e << "\n";
 	}
 	void def()
 	{
 		a = 81; b = 91; c = 310;
 		d = 3.14;
+		e = 0.8;
 	}
-	void insert(int A, int B, int C, ld D)
+	void insert(int A, int B, int C, ld D, ld E)
 	{
-		a = A; b = B; c = C; d = D;
+		a = A; b = B; c = C; d = D; e = E;
 	}
 };
 strat gen_similar(strat cur)
@@ -58,6 +59,8 @@ strat gen_similar(strat cur)
 	w.c = cur.c + random(max(-cur.c + 1, -100), 100);
 	ld tmp = cur.d * 100;
 	w.d = cur.d + ((ld)random(max(-(int)tmp, -100), 100) / 100);
+	tmp = cur.e * 100;
+	w.e = cur.e + ((ld)random(max(-(int)tmp, -100), 100) / 100);
 	return w;
 }
 strat new_random()
@@ -66,7 +69,8 @@ strat new_random()
 	w.a = random(30, 99);
 	w.b = random(90, 99);
 	w.c = random(80, 1000);
-	w.d = (ld)random(1, 900) / 100;
+	w.d = (ld)random(100, 900) / 100;
+	w.e = (ld)random(30, 200) / 100;
 	return w;
 }
 void __init__(strat cur, player & who)
@@ -189,15 +193,6 @@ int main()
 	}
 	cout << "current winner: \n";
 	mn.show();
-	
-	
-	//  FOR TESTING STRATS
-	//  mn.insert(98, 90, 308, 0.46);
-	//  other.insert(81, 91, 280, 3.19);
-	//  mn.show();
-	//  other.show();
-	
-	//  one_game(mn, other);
 	
 }
 	

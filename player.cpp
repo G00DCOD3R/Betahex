@@ -38,6 +38,7 @@ void player::__init__()
 	UCT_LOG_MULT = 1.14;
 	MOVE_IGNORE = 100;
 	ROLL_OUT_NR = 400;
+	UCT_EVAL_MULT = 0.8;
 	
 	//  cin >> keep_close_policy >> MOVE_IGNORE >> ROLL_OUT_NR >> UCT_LOG_MULT;
 }
@@ -51,6 +52,7 @@ PII player::search_move(ld tm_for_move)
 	term_nodes.clear();
 	v.pb(vector<pair<PII,int>>(0));
 	r[0][0] = r[1][0] = 0;
+	beval[0] = 0;
 	clock_t ST = clock();
 	for(int i=0;;i++)
 	{
@@ -174,7 +176,7 @@ pair<PII, int> player::uct_sel(int node)
 	ld ans_choice = -1;
 	for(auto e: v[node])
 	{
-		ld cur = (ld)r[0][e.se] / r[1][e.se] + sqrt(log(r[1][node])*UCT_LOG_MULT/r[1][e.se]);
+		ld cur = (ld)r[0][e.se] / r[1][e.se] + beval[e.se] * UCT_EVAL_MULT + sqrt(log(r[1][node])*UCT_LOG_MULT/r[1][e.se]);
 		if(ans_choice < cur) 
 		{
 			ans_choice = cur;
@@ -201,6 +203,15 @@ void player::get_path(int node, vi & path)
 		inv_moves[n].clear();
 		inv_moves[node].insert(child);
 		r[0][n] = r[1][n] = 0;
+		ld tmp1 = G.eval(0), tmp2 = G.eval(1);
+		
+		//  we want to maximize our score, so maximize opponent's eval()
+		//  it's after we made a move, so the turn says whose eval() we want to maximize in n
+		//  also tmp1 + tmp2 > 0, since hex can't end in a tie (otherwise something is broken with eval())
+		
+		if(G.turn == 0) beval[n] = tmp1 / (tmp1 + tmp2);
+		else beval[n] = tmp2 / (tmp1 + tmp2);
+		
 		v[node].pb(mp(child, n));
 		v.pb(vector<pair<PII,int>>(0));
 		if(tmp > 1) term_nodes[n] = tmp;
