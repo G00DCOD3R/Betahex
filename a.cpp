@@ -32,7 +32,7 @@ constexpr ll nax = 1e6+6969, INF = 2e9+6969;
 
 player me, they;
 ld TIME_PER_MOVE = 30.0; // time that ai will take to choose a move (in seconds)
-bool chosen_mode = 0; // 0 -> human vs ai, 1 -> ai with itself
+bool chosen_mode = 1; // 0 -> human vs ai, 1 -> ai with itself
 
 void TESTING(); // Do with it whatever you want ;) 
 
