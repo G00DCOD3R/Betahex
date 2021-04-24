@@ -179,3 +179,122 @@ string game::conv_move(PII where)
 	row = (char)(where.fi + 'A'-1) + row;
 	return row;
 }
+
+inline bool game::inboard(int x, int y)
+{
+	if(x < 1 || x > N || y < 1 || y > N) return false;
+	return true;
+}
+
+int game::eval(bool who) 
+{
+	// returns second-smallest distance between two sides of the board
+	//  who is variable describing player, 0 is Red, 1 is Blue
+	//  basically evaluates board position
+	
+	int small_inf = 10000;
+	int dis[N+1][N+1];
+	vi X{-1, -1, 0, 0, 1, 1}, Y{0, 1, -1, 1, -1, 0};
+	for(int i=1;i<=N;i++) for(int j=1;j<=N;j++) dis[i][j] = small_inf;
+	deque <PII> q;
+	
+	if(!who) // Red
+	{
+		for(int i=1;i<=N;i++) 
+		{
+			if(br[i][1] == 2) continue;
+			if(br[i][1] == 0) dis[i][1] = 1;
+			else dis[i][1] = 0;
+			if(dis[i][1] == 0) q.push_front(mp(i, 1));
+			else q.push_back(mp(i, 1));
+		}
+	}
+	else 
+	{
+		for(int i=1;i<=N;i++) 
+		{
+			if(br[1][i] == 1) continue;
+			if(br[1][i] == 0) dis[1][i] = 1;
+			else dis[1][i] = 0;
+			if(dis[1][i] == 0) q.push_front(mp(1, i));
+			else q.push_back(mp(1, i));
+		}
+	}
+	
+	int fin_ans = small_inf;
+	
+	while(!q.empty())
+	{
+		PII cur = q.front();
+		q.pop_front();
+		int bad = 2;
+		if(who) bad = 1;
+		
+		for(int op = 0; op < 6; op++) 
+		{
+			int x = cur.fi + X[op], y = cur.se + Y[op];
+			if(!inboard(x, y)) continue;
+			if(br[x][y] == bad) continue;
+			int cost = 0;
+			if(br[x][y] == 0) cost = 1;
+			if(dis[x][y] > dis[cur.fi][cur.se] + cost) 
+			{
+				dis[x][y] = dis[cur.fi][cur.se] + cost;
+				if(cost == 0) q.push_front(mp(x, y));
+				else q.push_back(mp(x, y));
+			}
+		}
+		
+	}
+	
+	if(who) // Blue
+	{
+		for(int i=1;i<=N;i++) 
+		{
+			int best1, best2;
+			best1 = best2 = small_inf;
+			for(int op = 0; op < 6; op++) 
+			{
+				int x = N + X[op], y = i + Y[op];
+				if(!inboard(x, y)) continue;
+				if(dis[x][y] < best1)
+				{
+					best2 = best1;
+					best1 = dis[x][y];
+				}
+				else if(dis[x][y] < best2) best2 = dis[x][y];
+			}
+			if(br[N][i] == 0) best2++;
+			fin_ans = min(fin_ans, best2);
+		}
+	}
+	else
+	{
+		for(int i=1;i<=N;i++) 
+		{
+			int best1, best2;
+			best1 = best2 = small_inf;
+			for(int op = 0; op < 6; op++) 
+			{
+				int x = i + X[op], y = N + Y[op];
+				if(!inboard(x, y)) continue;
+				if(dis[x][y] < best1)
+				{
+					best2 = best1;
+					best1 = dis[x][y];
+				}
+				else if(dis[x][y] < best2) best2 = dis[x][y];
+			}
+			if(br[i][N] == 0) best2++;
+			fin_ans = min(fin_ans, best2);
+		}
+	}
+	
+	//  for(int i=1;i<=N;i++) 
+	//  {
+		//  for(int j=1;j<=N;j++) printf("%d ", dis[i][j]);
+		//  puts("");
+	//  }
+	
+	return fin_ans;
+}

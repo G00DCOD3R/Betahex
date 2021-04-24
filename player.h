@@ -30,6 +30,7 @@ class player
 		set <PII> inv_moves[10000069];
 		int moves_ahead;
 		int random(int a, int b);
+		ld beval[1000069];
 		
 	public: 
 		// decision_making
@@ -37,6 +38,7 @@ class player
 		ld UCT_LOG_MULT;
 		int MOVE_IGNORE;
 		int ROLL_OUT_NR;
+		ld UCT_EVAL_MULT;
 		
 		// functions
 		void __init__();
