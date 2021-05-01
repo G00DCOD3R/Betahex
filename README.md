@@ -13,10 +13,7 @@ g++ -O3 a.cpp game.cpp player.cpp -o a
 **Currently Betahex plays with itself**
 
 To change that you should: 
-1. comment lines in ```__init__()``` function in game.cpp
-2. comment lines in a.cpp in ```main()```
-
-I plan to add an easier way of changing modes 
+1. in a.cpp change variable chosen_mode (1 or 0)
 
 **For testing / training purposes use train.cpp**
 
@@ -35,4 +32,4 @@ decent strat (which is set as a default in a.cpp):
 **Todo**
 - provide more game analysis (such as other good moves, and their win%)
 - board hash
-- board evaluation (as an extra parameter to the position value)
+- board evaluation (as an extra parameter to the position value), now it's not that good 
